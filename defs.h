@@ -390,7 +390,8 @@ struct tcb {
 #if defined(ALPHA) || defined(AVR32) || defined(SPARC) || defined(SPARC64) \
   || defined(POWERPC) || defined(IA64) || defined(HPPA) \
   || defined(SH) || defined(SH64) || defined(S390) || defined(S390X) \
-  || defined(ARM) || defined(MIPS) || defined(BFIN) || defined(TILE)
+  || defined(ARM) || defined(MIPS) || defined(BFIN) || defined(TILE) \
+  || defined(ARC)
 /* This tracee has entered into execve syscall. Expect post-execve SIGTRAP
  * to happen. (When it is detected, tracee is continued and this bit is cleared.)
  */

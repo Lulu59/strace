@@ -37,6 +37,7 @@ EXTRA_DIST = $(man_MANS) errnoent.sh signalent.sh syscallent.sh ioctlsort.c \
 	     linux/i386/ioctlent.h.in linux/i386/syscallent.h \
 	     linux/alpha/errnoent.h linux/alpha/ioctlent.h.in \
 	     linux/alpha/signalent.h linux/alpha/syscallent.h \
+	     linux/arc/syscallent.h \
 	     linux/arm/ioctlent.h.in linux/arm/syscallent.h \
 	     linux/arm/syscallent1.h \
 	     linux/arm/signalent1.h linux/arm/ioctlent1.h \

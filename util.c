@@ -1126,6 +1126,18 @@ printcall(struct tcb *tcp)
 		return;
 	}
 	tprintf("[%08lx] ", pc);
+#elif defined(ARC)
+	/*
+	 * Needed by strace -i to print the PC of syscall trap insn
+	 * Needs to be user->efa
+	 */
+	long pc;
+
+	if (upeek(tcp, 4*40, &pc) < 0) {
+		PRINTBADPC;
+		return;
+	}
+	tprintf("[%08lx] ", pc);
 #endif /* architecture */
 }
 
@@ -1248,6 +1260,10 @@ change_syscall(struct tcb *tcp, int new)
 	return 0;
 #elif defined(MICROBLAZE)
 	if (ptrace(PTRACE_POKEUSER, tcp->pid, (char*)(PT_GPR(0)), new) < 0)
+		return -1;
+	return 0;
+#elif defined(ARC)
+	if (ptrace(PTRACE_POKEUSER, tcp->pid, (char*)(PT_r8), new) < 0)
 		return -1;
 	return 0;
 #else

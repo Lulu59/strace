@@ -681,6 +681,8 @@ static long r9;
 static long r10;
 #elif defined(MICROBLAZE)
 static long r3;
+# elif defined(ARC)
+static long r0;
 #endif
 
 /* Returns:
@@ -1109,6 +1111,9 @@ get_scno(struct tcb *tcp)
 #elif defined(MICROBLAZE)
 	if (upeek(tcp, 0, &scno) < 0)
 		return -1;
+# elif defined(ARC)
+	if (upeek(tcp, PT_r8, &scno) < 0)
+		return -1;
 #endif
 
 #if defined(SH)
@@ -1488,6 +1493,14 @@ get_syscall_args(struct tcb *tcp)
 	tcp->u_arg[3] = i386_regs.esi;
 	tcp->u_arg[4] = i386_regs.edi;
 	tcp->u_arg[5] = i386_regs.ebp;
+
+# elif defined(ARC)
+	const int argreg[] = {PT_r0,PT_r1,PT_r2,PT_r3,PT_r4,PT_r5,PT_r6,PT_r7};
+
+	for (i = 0; i < nargs; ++i)
+		if (upeek(tcp,  argreg[i], &tcp->u_arg[i]) < 0)
+			return -1;
+
 #else /* Other architecture (32bits specific) */
 	for (i = 0; i < nargs; ++i)
 		if (upeek(tcp, i*4, &tcp->u_arg[i]) < 0)
@@ -1909,6 +1922,14 @@ get_error(struct tcb *tcp)
 	}
 	else {
 		tcp->u_rval = r3;
+	}
+#elif defined(ARC)
+	if (check_errno && is_negated_errno(r0)) {
+		tcp->u_rval = -1;
+		u_error = -r0;
+	}
+	else {
+		tcp->u_rval = r0;
 	}
 #endif
 	tcp->u_error = u_error;

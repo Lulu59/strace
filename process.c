@@ -2116,11 +2116,26 @@ const struct xlat struct_user_offsets[] = {
 	{ PT_FSR,		"rfsr",					},
 	{ PT_KERNEL_MODE,	"kernel_mode",				},
 #endif
+#ifdef ARC
+	{ PT_r0,		"r0"					},
+	{ PT_r1,		"r1"					},
+	{ PT_r2,		"r2"					},
+	{ PT_r3,		"r3"					},
+	{ PT_r4,		"r4"					},
+	{ PT_r5,		"r5"					},
+	{ PT_r6,		"r6"					},
+	{ PT_r7,		"r7"					},
+	{ PT_r8,		"r8"					},
+	{ PT_r9,		"r9"					},
+	{ PT_r10,		"r10"					},
+	{ PT_r11,		"r11"					},
+	{ PT_r12,		"r12"					},
+#endif
 
 #if !defined(SPARC) && !defined(HPPA) && !defined(POWERPC) \
 		&& !defined(ALPHA) && !defined(IA64) \
 		&& !defined(CRISV10) && !defined(CRISV32) && !defined(MICROBLAZE)
-# if !defined(S390) && !defined(S390X) && !defined(MIPS) && !defined(SPARC64) && !defined(AVR32) && !defined(BFIN) && !defined(TILE)
+# if !defined(S390) && !defined(S390X) && !defined(MIPS) && !defined(SPARC64) && !defined(AVR32) && !defined(BFIN) && !defined(TILE) && !defined(ARC)
 	{ uoff(u_fpvalid),	"offsetof(struct user, u_fpvalid)"	},
 # endif
 # if defined(I386) || defined(X86_64) || defined(X32)
@@ -2142,13 +2157,13 @@ const struct xlat struct_user_offsets[] = {
 	{ uoff(start_stack),	"offsetof(struct user, start_stack)"	},
 # endif
 	{ uoff(signal),		"offsetof(struct user, signal)"		},
-# if !defined(AVR32) && !defined(S390) && !defined(S390X) && !defined(MIPS) && !defined(SH) && !defined(SH64) && !defined(SPARC64) && !defined(TILE)
+# if !defined(AVR32) && !defined(S390) && !defined(S390X) && !defined(MIPS) && !defined(SH) && !defined(SH64) && !defined(SPARC64) && !defined(TILE) && !defined(ARC)
 	{ uoff(reserved),	"offsetof(struct user, reserved)"	},
 # endif
 # if !defined(SPARC64)
 	{ uoff(u_ar0),		"offsetof(struct user, u_ar0)"		},
 # endif
-# if !defined(ARM) && !defined(AVR32) && !defined(MIPS) && !defined(S390) && !defined(S390X) && !defined(SPARC64) && !defined(BFIN) && !defined(TILE)
+# if !defined(ARM) && !defined(AVR32) && !defined(MIPS) && !defined(S390) && !defined(S390X) && !defined(SPARC64) && !defined(BFIN) && !defined(TILE) && !defined(ARC)
 	{ uoff(u_fpstate),	"offsetof(struct user, u_fpstate)"	},
 # endif
 	{ uoff(magic),		"offsetof(struct user, magic)"		},

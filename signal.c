@@ -1090,6 +1090,20 @@ sys_sigreturn(struct tcb *tcp)
 		tprints(sprintsigmask(") (mask ", &sigm, 0));
 	}
 	return 0;
+#elif defined(ARC)
+	if (entering(tcp)) {
+		struct ucontext uc;
+		long sp;
+		tcp->u_arg[0] = 0;
+		if (upeek(tcp, PT_sp, &sp) < 0)
+			return 0;
+
+		/* our ucontext starts right at the sp */
+		if (umove(tcp, sp, &uc) < 0)
+			return 0;
+		memcpy(tcp->u_arg + 1, &uc.uc_sigmask, sizeof(uc.uc_sigmask));
+	}
+	return 0;
 #else
 #warning No sys_sigreturn() for this architecture
 #warning         (no problem, just a reminder :-)
