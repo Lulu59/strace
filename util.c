@@ -71,6 +71,10 @@
 # define PTRACE_SETREGS PTRACE_SETREGS64
 #endif
 
+#ifdef ARC
+#include <sys/uio.h>	// iovev
+#endif
+
 /* macros */
 #ifndef MAX
 # define MAX(a,b)		(((a) > (b)) ? (a) : (b))
@@ -960,6 +964,18 @@ upeek(struct tcb *tcp, long off, long *res)
 {
 	long val;
 
+#ifdef ARC
+	int buf[50];
+	struct iovec kiov;
+	kiov.iov_len = 200;
+	kiov.iov_base = buf;
+	val = ptrace(PTRACE_GETREGSET, tcp->pid, 1, &kiov);
+	if (val == -1 && errno) {
+		perror_msg("upeek: PTRACE_GETREGSET pid:%d @0x%lx)", tcp->pid, off);
+		return -1;
+	}
+	*res = buf[off/4];
+#else
 	errno = 0;
 	val = ptrace(PTRACE_PEEKUSER, tcp->pid, (char *) off, 0);
 	if (val == -1 && errno) {
@@ -969,6 +985,7 @@ upeek(struct tcb *tcp, long off, long *res)
 		return -1;
 	}
 	*res = val;
+#endif
 	return 0;
 }
 

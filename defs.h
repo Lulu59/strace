@@ -196,6 +196,25 @@ extern long ptrace(int, int, char *, long);
 # define REG_PC             (0*8)
 # define REG_SYSCALL        (2*8)
 #endif /* SH64 */
+#ifdef ARC
+#include <asm/ptrace.h>
+#define BASE_OFF	(void *)&(((struct user_regs_struct *)0)->scratch.pad)
+#define REG_OFF(x)	(void *)&(((struct user_regs_struct *)0)->scratch.x)
+#define PT_r0		(REG_OFF(r0) - BASE_OFF)
+#define PT_r1		(REG_OFF(r1) - BASE_OFF)
+#define PT_r2		(REG_OFF(r2) - BASE_OFF)
+#define PT_r3		(REG_OFF(r3) - BASE_OFF)
+#define PT_r4		(REG_OFF(r4) - BASE_OFF)
+#define PT_r5		(REG_OFF(r5) - BASE_OFF)
+#define PT_r6		(REG_OFF(r6) - BASE_OFF)
+#define PT_r7		(REG_OFF(r7) - BASE_OFF)
+#define PT_r8		(REG_OFF(r8) - BASE_OFF)
+#define PT_r9		(REG_OFF(r9) - BASE_OFF)
+#define PT_r10		(REG_OFF(r10) - BASE_OFF)
+#define PT_r11		(REG_OFF(r11) - BASE_OFF)
+#define PT_r12		(REG_OFF(r12) - BASE_OFF)
+#define PT_sp		(REG_OFF(sp) - BASE_OFF)
+#endif
 
 #define SUPPORTED_PERSONALITIES 1
 #define DEFAULT_PERSONALITY 0
