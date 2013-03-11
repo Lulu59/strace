@@ -170,6 +170,9 @@ static const struct xlat mmap_flags[] = {
 	{ MAP_CACHE_NO_L2, "MAP_CACHE_NO_L2" },
 	{ MAP_CACHE_NO_L1, "MAP_CACHE_NO_L1" },
 #endif
+#ifdef MAP_UNINITIALIZED
+	{ MAP_UNINITIALIZED, "MAP_UNINITIALIZED" },
+#endif
 	{ 0,		NULL		},
 };
 
