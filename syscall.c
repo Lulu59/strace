@@ -1687,6 +1687,9 @@ get_syscall_result(struct tcb *tcp)
 #elif defined(MICROBLAZE)
 	if (upeek(tcp, 3 * 4, &r3) < 0)
 		return -1;
+#elif defined(ARC)
+	if (upeek(tcp, PT_r0, &r0) < 0)
+		return -1;
 #endif
 
 #if defined(SH)
