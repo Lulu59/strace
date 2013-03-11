@@ -2174,7 +2174,7 @@ const struct xlat struct_user_offsets[] = {
 # endif
 #endif /* !defined(many arches) */
 
-#if !defined(HPPA) && !defined(ARC)
+#ifndef HPPA
 	{ sizeof(struct user),	"sizeof(struct user)"			},
 #endif
 	{ 0,			NULL					},
